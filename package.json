@@ -1,0 +1,19 @@
+{
+  "name": "@dithercat/ensata",
+  "version": "0.0.0",
+  "description": "sample discord chatbot based on servitor",
+  "type": "module",
+  "main": "js/index.js",
+  "repository": "https://github.com/dithercat/ensata",
+  "author": "dither",
+  "license": "0BSD",
+  "private": true,
+  "scripts": {
+    "start": "node ./js/index.js"
+  },
+  "dependencies": {
+    "@dithercat/servitor": "^0.0.8",
+    "discord.js": "^14.11.0",
+    "string-format": "^2.0.0"
+  }
+}
