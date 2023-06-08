@@ -2,7 +2,7 @@
 
 # ensata
 
-sample discord chatbot based on [servitor](https://github.com/dithercat/servitor)
+discord LLM chatbot based on [servitor](https://github.com/dithercat/servitor)
 
 ## running
 
