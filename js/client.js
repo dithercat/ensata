@@ -6,7 +6,8 @@ const discord = new Client({
     intents: new IntentsBitField().add([
         "Guilds",
         "GuildMessages",
-        "MessageContent"
+        "MessageContent",
+        "DirectMessages"
     ]),
     partials: [
         Partials.Channel

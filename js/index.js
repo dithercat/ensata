@@ -9,6 +9,10 @@ client.on("messageCreate", async msg => {
         const channel = await client.channels.fetch(msg.channel.id);
         const author = await client.users.fetch(msg.author);
 
+        // only accept dms if enabled in config
+        const isprivate = channel.isDMBased();
+        if (isprivate && !config.dms) { return; }
+
         // skip empty messages
         if (!msg.content.trim()) { return; }
 
@@ -25,8 +29,8 @@ client.on("messageCreate", async msg => {
             actor: { friendlyname, self },
             channel: {
                 id: channel.id,
-                friendlyname: channel.name,
-                isprivate: channel.isDMBased()
+                friendlyname: channel.name || "direct",
+                isprivate
             },
             message: {
                 id: msg.id,
@@ -40,7 +44,8 @@ client.on("messageCreate", async msg => {
         await bridge.remember(line);
 
         // if mentioned, respond
-        if (msg.mentions.has(client.user) && msg.author.id !== client.user.id) {
+        const mentioned = isprivate || msg.mentions.has(client.user);
+        if (mentioned && msg.author.id !== client.user.id) {
             // ensure inference service is reachable
             if (!await bridge.inference.ping()) {
                 await msg.reply("error: cant reach inference service");

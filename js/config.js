@@ -17,7 +17,8 @@ export const config = Object.assign({
         driver: "basilisk",
         endpoint: "http://127.0.0.1:5000/basilisk/",
         secret: null
-    }
+    },
+    dms: false
 }, JSON.parse(buff.toString()));
 
 // load prompt
