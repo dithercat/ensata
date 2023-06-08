@@ -1,10 +1,10 @@
 import format from "string-format";
 
 import {
-    BasiliskDriver,
+    BasiliskDriver, TextgenDriver,
     ServitorBridge,
     ServitorContextMemory,
-    ServitorSimpleContextFormatter
+    ServitorSimpleContextFormatter,
 } from "@dithercat/servitor";
 
 import { config, prompt } from "./config.js";
@@ -16,6 +16,11 @@ switch (config.inference.driver) {
         driver = new BasiliskDriver(
             config.inference.endpoint,
             config.inference.secret
+        );
+        break;
+    case "textgen":
+        driver = new TextgenDriver(
+            config.inference.endpoint
         );
         break;
     default:

@@ -7,7 +7,9 @@ sample discord chatbot based on [servitor](https://github.com/dithercat/servitor
 ## running
 
 1. set up [basilisk](https://github.com/dithercat/basilisk)
-   - eventually, [text-generation-webui will be supported](https://github.com/dithercat/servitor/issues/1)
+   - text-generation-webui is also kind of supported; change `driver` to
+     `textgen` and `endpoint` to `http://127.0.0.1:5000/api/v1/` in
+     `config.json`
 2. clone this repo somewhere
 3. copy `config_example.json` to `config.json`, enter your bot token
 4. `yarn` (or `npm install`) and `yarn start` (or `npm run start`)

@@ -61,10 +61,10 @@
     tslib "^2.5.0"
     ws "^8.13.0"
 
-"@dithercat/servitor@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@dithercat/servitor/-/servitor-0.0.8.tgz#fede20ed65261b867ed654b3d7baac9198f294cb"
-  integrity sha512-NbBEr+vkPCT+0kMlSVHmvXly8bRNdXEgQReZcOKazv8eh/WycoIdLgC7o7/QXudjUTNLeurY83PZBbNfqkjHhA==
+"@dithercat/servitor@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@dithercat/servitor/-/servitor-0.0.9.tgz#77465cb80d2844ec886e5ebd2a88932821817980"
+  integrity sha512-kyjX0bW9WGjDV7TLk/gzt1NhLM6exKPrNZ37YO1xZj+wrRvWg9BM1Bie7YtlBfUA+8lGsgqh8CDe2JtBhPzxsw==
   dependencies:
     node-fetch "^3.3.1"
     sequelize "^6.32.0"
