@@ -30,3 +30,9 @@ discord LLM chatbot based on [servitor](https://github.com/dithercat/servitor)
     before falling back to `/prompt`).
     - you really shouldnt modify `/prompt` directly since it is committed and
       you might experience merge conflicts.
+- this has absolutely nothing to do with the nintendo ds emulator of the same
+  name
+  - i was set on the name "iris" for the default simulacrum, but couldnt create
+    a discord bot account with that name. the next thing that came to mind
+    was "ensata", so i used that, and it seemed like a nice name for the
+    software itself.
