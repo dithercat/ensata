@@ -3,16 +3,16 @@
   "version": "0.0.0",
   "description": "discord LLM chatbot based on servitor",
   "type": "module",
-  "main": "src/index.js",
+  "main": "index.js",
   "repository": "https://github.com/dithercat/ensata",
   "author": "dither",
   "license": "0BSD",
   "private": true,
   "scripts": {
-    "start": "node ./src/index.js"
+    "start": "node ./index.js"
   },
   "dependencies": {
-    "@dithercat/servitor": "^0.1.13",
+    "@dithercat/servitor": "^0.1.15",
     "discord.js": "^14.11.0",
     "p-queue": "^7.3.4",
     "pg": "^8.11.0",

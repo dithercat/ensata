@@ -18,6 +18,9 @@ discord LLM chatbot based on [servitor](https://github.com/dithercat/servitor)
    3. run `create extension vector;` to enable pgvector on the db
    4. in `config.json`, change the storage driver to `"pgvector"` and
       change the storage endpoint to the address and credentials of the db
+   - you may also set the storage driver to `"ram"` for basic cross-channel
+     memory, but it will be lost when you restart (and also will increasingly
+     consume cpu ram over time)
 5. `yarn` (or `npm install`) and `yarn start` (or `npm run start`)
 6. ping the bot
 

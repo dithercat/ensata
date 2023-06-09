@@ -1,9 +1,9 @@
 import Queue from "p-queue";
 
-import client from "./client.js";
-import { config } from "./config.js";
-import { bridge } from "./llm.js";
-import { cleanContentNoNick, fixName } from "./misc.js";
+import client from "./lib/client.js";
+import { config } from "./lib/config.js";
+import { bridge } from "./lib/llm.js";
+import { cleanContentNoNick, fixName } from "./lib/misc.js";
 
 // ensures that messages are processed as they arrive
 const queue = new Queue({ concurrency: 1 });
