@@ -12,6 +12,11 @@ discord LLM chatbot based on [servitor](https://github.com/dithercat/servitor)
    - text-generation-webui is also kind of supported;
      in `config.json`, change the inference driver to `"textgen"` and inference
      endpoint to `"http://127.0.0.1:5000/api/v1/"`
+   - at the moment, **long-term memory is not supported with
+     text-generation-webui!** the reason for this is that long-term memory
+     depends on an embedding driver for semantic search -- basilisk supports
+     both inference and embedding, and no other embed drivers are currently
+     available in-tree with servitor...
 4. (OPTIONAL) if using long-term memory:
    1. set up and configure postgresql and create a database for ensata to use
    2. install the [pgvector](https://github.com/pgvector/pgvector) extension
