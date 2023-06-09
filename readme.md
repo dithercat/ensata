@@ -12,6 +12,7 @@ discord LLM chatbot based on [servitor](https://github.com/dithercat/servitor)
    - text-generation-webui is also kind of supported;
      in `config.json`, change the inference driver to `"textgen"` and inference
      endpoint to `"http://127.0.0.1:5000/api/v1/"`
+   - you will need to start text-generation-webui with `--api` and `--notebook`
    - at the moment, **long-term memory is not supported with
      text-generation-webui!** the reason for this is that long-term memory
      depends on an embedding driver for semantic search -- basilisk supports
