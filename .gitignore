@@ -1,4 +1,8 @@
 node_modules/
 *.log
+
 prompt.local
+
 config.json
+config*.json
+!config_example.json

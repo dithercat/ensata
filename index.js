@@ -1,8 +1,8 @@
 import Queue from "p-queue";
 
-import client from "./lib/client.js";
 import { config } from "./lib/config.js";
 import { bridge } from "./lib/llm.js";
+import client from "./lib/client.js";
 import { cleanContentNoNick, fixName } from "./lib/misc.js";
 
 // ensures that messages are processed as they arrive
