@@ -3,20 +3,25 @@ import format from "string-format";
 import {
     BasiliskDriver, TextgenDriver,
     ServitorBridge,
-    ServitorContextMemory,
+    ServitorWindowMemory,
     ServitorSimpleContextFormatter,
+    ServitorPostgresVectorStoreDriver,
+    ServitorVectorMemory
 } from "@dithercat/servitor";
 
 import { config, prompt } from "./config.js";
 import { timeOfDay } from "./misc.js";
 
+// init inference driver
 var driver;
+var embeddriver;
 switch (config.inference.driver) {
     case "basilisk":
         driver = new BasiliskDriver(
             config.inference.endpoint,
             config.inference.secret
         );
+        embeddriver = driver;
         break;
     case "textgen":
         driver = new TextgenDriver(
@@ -27,12 +32,34 @@ switch (config.inference.driver) {
         throw new Error("unrecognized driver");
 }
 
+// init storage driver
+var storage;
+if (config.storage != null && config.storage.driver != null && config.storage.driver !== "none") {
+    if (embeddriver == null) {
+        throw new Error("sorry, long-term memory currently requires basilisk inference driver");
+    }
+    const dims = await embeddriver.dimensions();
+    switch (config.storage.driver) {
+        case "pgvector":
+        case "postgres":
+            storage = new ServitorPostgresVectorStoreDriver(
+                config.storage.endpoint,
+                dims
+            );
+            await storage.init();
+            break;
+        default:
+            throw new Error("unrecognized storage driver");
+    }
+}
+
 const formatter = new ServitorSimpleContextFormatter({
     name_capitalize: false,
     internal_monologue: true
 });
 
-class EnsataContextMemory extends ServitorContextMemory {
+// init short-term memory
+class EnsataWindowMemory extends ServitorWindowMemory {
     _warmupChannel(ring) {
         ring.push({
             actor: {
@@ -51,7 +78,14 @@ class EnsataContextMemory extends ServitorContextMemory {
         });
     }
 }
-const context = new EnsataContextMemory(formatter);
+const shortterm = new EnsataWindowMemory(formatter);
+
+// init long-term memory if configured
+const longterm = [];
+if (embeddriver != null && storage != null) {
+    const vector = new ServitorVectorMemory(embeddriver, storage, formatter);
+    longterm.push(vector);
+}
 
 export const bridge = new ServitorBridge({
     char: config.char,
@@ -61,7 +95,7 @@ export const bridge = new ServitorBridge({
         min_length: 4,
         stopping_strings: ["\n\n"]
     },
-    driver: { inference: driver },
-    memory: { context },
+    driver,
+    memory: { shortterm, longterm },
     formatter
 });

@@ -6,14 +6,20 @@ discord LLM chatbot based on [servitor](https://github.com/dithercat/servitor)
 
 ## running
 
-1. set up [basilisk](https://github.com/dithercat/basilisk)
-   - text-generation-webui is also kind of supported; change `driver` to
-     `textgen` and `endpoint` to `http://127.0.0.1:5000/api/v1/` in
-     `config.json`
-2. clone this repo somewhere
-3. copy `config_example.json` to `config.json`, enter your bot token
-4. `yarn` (or `npm install`) and `yarn start` (or `npm run start`)
-5. ping the bot
+1. clone this repo somewhere
+2. copy `config_example.json` to `config.json`, enter your discord bot token
+3. set up and configure [basilisk](https://github.com/dithercat/basilisk)
+   - text-generation-webui is also kind of supported;
+     in `config.json`, change the inference driver to `"textgen"` and inference
+     endpoint to `"http://127.0.0.1:5000/api/v1/"`
+4. (OPTIONAL) if using long-term memory:
+   1. set up and configure postgresql and create a database for ensata to use
+   2. install the [pgvector](https://github.com/pgvector/pgvector) extension
+   3. run `create extension vector;` to enable pgvector on the db
+   4. in `config.json`, change the storage driver to `"pgvector"` and
+      change the storage endpoint to the address and credentials of the db
+5. `yarn` (or `npm install`) and `yarn start` (or `npm run start`)
+6. ping the bot
 
 ## notes
 

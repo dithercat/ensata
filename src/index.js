@@ -1,9 +1,14 @@
+import Queue from "p-queue";
+
 import client from "./client.js";
 import { config } from "./config.js";
 import { bridge } from "./llm.js";
 import { cleanContentNoNick, fixName } from "./misc.js";
 
-client.on("messageCreate", async msg => {
+// ensures that messages are processed as they arrive
+const queue = new Queue({ concurrency: 1 });
+
+async function handleMessage(msg) {
     var handle;
     try {
         const channel = await client.channels.fetch(msg.channel.id);
@@ -29,19 +34,19 @@ client.on("messageCreate", async msg => {
             actor: { friendlyname, self },
             channel: {
                 id: channel.id,
-                friendlyname: channel.name || "direct",
+                friendlyname: channel.isDMBased() ? "direct" : channel.name,
                 isprivate
             },
             message: {
                 id: msg.id,
                 content,
                 tokens: [],
-                timestamp: msg.createdTimestamp
+                timestamp: new Date(msg.createdTimestamp).toISOString()
             }
         };
 
         // insert message into context buffer
-        await bridge.remember(line);
+        await bridge.save(line, true);
 
         // if mentioned, respond
         const mentioned = isprivate || msg.mentions.has(client.user);
@@ -65,23 +70,25 @@ client.on("messageCreate", async msg => {
             // stop typing and send message
             clearTimeout(handle);
             const rep = await msg.reply(content);
-            await bridge.remember({
+            await bridge.save({
                 actor: { friendlyname: config.char, self: true },
                 channel: line.channel,
                 message: {
                     id: rep.id,
-                    content,
+                    content: bridge.formatter.composeWithThought(content, thought),
                     tokens: result.message.tokens,
-                    timestamp: rep.createdTimestamp
+                    timestamp: new Date(msg.createdTimestamp).toISOString()
                 }
-            });
+            }, true);
         }
     }
     catch (ex) {
         clearTimeout(handle);
         console.error(ex);
     }
-});
+}
+
+client.on("messageCreate", msg => queue.add(() => handleMessage(msg)));
 
 client.on("ready", () => {
     console.debug("connected to discord");

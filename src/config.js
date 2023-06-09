@@ -1,15 +1,15 @@
-import fs from "fs/promises";
-import path from "path";
-import url from "url";
+import { readFile, access, constants } from "fs/promises";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
 
-const root = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), "..");
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
-const path_config = path.resolve(root, "config.json");
-const path_prompt = path.resolve(root, "prompt");
-const path_prompt_local = path.resolve(root, "prompt.local");
+const path_config = resolve(root, "config.json");
+const path_prompt = resolve(root, "prompt");
+const path_prompt_local = resolve(root, "prompt.local");
 
 // load config
-var buff = await fs.readFile(path_config);
+var buff = await readFile(path_config);
 export const config = Object.assign({
     char: "iris",
     introduction: "(thought: i am now online.) good {timeofday}. how may i be of service today?",
@@ -23,12 +23,12 @@ export const config = Object.assign({
 
 // load prompt
 try {
-    await fs.access(path_prompt_local, fs.constants.R_OK);
-    buff = await fs.readFile(path_prompt_local);
+    await access(path_prompt_local, constants.R_OK);
+    buff = await readFile(path_prompt_local);
 }
 catch (ex) {
     console.debug("using default prompt");
-    buff = await fs.readFile(path_prompt);
+    buff = await readFile(path_prompt);
 }
 export const prompt = buff.toString()
     // replace bos/eos

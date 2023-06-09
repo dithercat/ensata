@@ -1,3 +1,5 @@
+import { ChannelType } from "discord.js";
+
 export function cleanContentNoNick(str, channel) {
     return str.replaceAll(/<(@[!&]?|#)(\d{17,19})>/g, (match, type, id) => {
         switch (type) {
