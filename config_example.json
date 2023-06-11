@@ -1,6 +1,7 @@
 {
-    "char": "iris",
-    "token": "put discord bot token here",
+    "discord": {
+        "token": "put discord bot token here"
+    },
     "inference": {
         "driver": "basilisk",
         "endpoint": "http://127.0.0.1:5000/basilisk/",

@@ -37,15 +37,17 @@ discord LLM chatbot based on [servitor](https://github.com/dithercat/servitor)
 - you need to enable the message content privileged intent in the discord dev
   portal
   ![](images/messagecontent.png)
-- the out-of-box prompt defines a catgirl AI simulacrum named "iris"
-  - you can set the simulacrum's name and their initial "warmup" message with
-    the `char` and `introduction` keys in config.json.
+- the out-of-box config defines a catgirl AI simulacrum named "iris"
+  - you can set the simulacrum's name (`name`), characterization (`extra`),
+    pronouns (`pronouns`), and warmup message (`warmup`) with the `agent` key
+    in `config.json`.
+    - see line 20 or so of `lib/config.js` for the full schema.
     - if the discord username differs from the simulacrum's name, it will
       automatically be corrected for consistency.
-  - you can change the base preconditioning by creating a file called
-    `/prompt.local` and editing that (ensata will try to load `/prompt.local`
-    before falling back to `/prompt`).
-    - you really shouldnt modify `/prompt` directly since it is committed and
+  - if you want more control, you can change the base preconditioning template
+    by creating a file called `prompt.local` and editing that (ensata will try
+    to load `prompt.local` before falling back to `prompt`).
+    - you really shouldnt modify `prompt` directly since it is committed and
       you might experience merge conflicts.
 - this has absolutely nothing to do with the nintendo ds emulator of the same
   name

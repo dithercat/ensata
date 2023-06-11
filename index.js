@@ -16,7 +16,7 @@ async function handleMessage(msg) {
 
         // only accept dms if enabled in config
         const isprivate = channel.isDMBased();
-        if (isprivate && !config.dms) { return; }
+        if (isprivate && !config.discord.dms) { return; }
 
         // skip empty messages
         if (!msg.content.trim()) { return; }
@@ -24,11 +24,11 @@ async function handleMessage(msg) {
         // get author name
         // use character name if composed by self
         const self = author.id === client.user.id;
-        const friendlyname = self ? config.char : author.username;
+        const friendlyname = self ? config.agent.name : author.username;
 
         // clean up content
         const content = fixName(cleanContentNoNick(msg.content, channel),
-            client.user.username, config.char);
+            client.user.username, config.agent.name);
 
         const line = {
             actor: { friendlyname, self },
@@ -41,6 +41,7 @@ async function handleMessage(msg) {
                 id: msg.id,
                 content,
                 tokens: [],
+                tokens_raw: [],
                 timestamp: new Date(msg.createdTimestamp).toISOString()
             }
         };
@@ -71,7 +72,7 @@ async function handleMessage(msg) {
             clearTimeout(handle);
             const rep = await msg.reply(content);
             await bridge.save({
-                actor: { friendlyname: config.char, self: true },
+                actor: { friendlyname: config.agent.name, self: true },
                 channel: line.channel,
                 message: {
                     id: rep.id,

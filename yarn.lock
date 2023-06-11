@@ -61,10 +61,10 @@
     tslib "^2.5.0"
     ws "^8.13.0"
 
-"@dithercat/servitor@^0.1.16":
-  version "0.1.16"
-  resolved "https://registry.yarnpkg.com/@dithercat/servitor/-/servitor-0.1.16.tgz#db96bb4eb81002647189c9e42283b3b1e2ea537e"
-  integrity sha512-PFsId9p9W2OYvC/9+o3iS8rfGPNlS17wUyeNTtMVDObRED0aBVn8piuMw9YWUxSWBRmQUt1YZLlRQG+aS8sjpA==
+"@dithercat/servitor@^0.1.17":
+  version "0.1.17"
+  resolved "https://registry.yarnpkg.com/@dithercat/servitor/-/servitor-0.1.17.tgz#f218f2ce10f27bacb4c02fa03f165a3380e02e75"
+  integrity sha512-x8LlCTYUnr87sj/KAzgSRbyi015TSIR+c04RX21VisNW+zQRzP5fxtGQJ00bUTLW1HHiEEOoJm0VkYrqZ4CaMg==
   dependencies:
     cheminfo-types "^1.7.2"
     ml-distance "^4.0.1"
