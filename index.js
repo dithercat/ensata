@@ -5,7 +5,7 @@ import { bridge } from "./lib/llm.js";
 import client from "./lib/client.js";
 import { cleanContentNoNick, fixName } from "./lib/misc.js";
 
-// ensures that messages are processed as they arrive
+// ensures that messages are processed in order
 const queue = new Queue({ concurrency: 1 });
 
 async function handleMessage(msg) {
@@ -52,12 +52,6 @@ async function handleMessage(msg) {
         // if mentioned, respond
         const mentioned = isprivate || msg.mentions.has(client.user);
         if (mentioned && msg.author.id !== client.user.id) {
-            // ensure inference service is reachable
-            if (!await bridge.inference.ping()) {
-                await msg.reply("error: cant reach inference service");
-                return;
-            }
-
             // start typing
             await msg.channel.sendTyping();
             handle = setInterval(() => msg.channel.sendTyping(), 2000);
